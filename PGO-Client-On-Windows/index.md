@@ -62,28 +62,19 @@ We set the API Server URL to localhost because we will be using port-forwarding 
 
 ## Connecting to the Operator pod in Kubernetes
 
-Now is the time to port-forward to the Operator in Kubernetes. I will be using PowerShell but use whichever you prefer. Please make sure you have authenticated your kubectly or oc command line client. 
+Now is the time to port-forward to the Operator in Kubernetes. I will be using PowerShell but use whichever you prefer. Please make sure you have authenticated your kubectl or oc command line client. 
 
 For all the Kubernetes/OpenShift commands (as opposed to Operator commands) there is no difference in command syntax, just a different binary to call - *oc* versus *kubectl*. I will use *kubectl* in this blog post.
  
- I would also recommend you set *pgo* to be your default namespace/project but I will use the flags here. 
+I would also recommend you set *pgo* to be your default namespace/project but I will use the flags here. 
 
-### Find the pod
+### Port-Forward to the Operator service
 
-To find the operator pod you use the following command :
-
-```
-> kubectl get pods -n pgo
-NAME                                 READY   STATUS    RESTARTS   AGE
-postgres-operator-5fb47ccf59-46wcf   4/4     Running   28         58d
-``` 
-
-### Port-Forward to the Pod
-
-We are going to set it up so that when we request port 8443 from localhost, the request will actually be forwarded to port 8443 on the Operator pod. The command is really quite simple:
+We are going to set it up so that when we request port 8443 from localhost, the request will actually be forwarded to port 8443 on the Operator service. The service will then forward on our  The command is really quite simple:
 
 ```
-> kubectl port-forward postgres-operator-5fb47ccf59-46wcf 8443:8443
+> kubectl -n pgo port-forward svc/postgres-operator 8443:8443
+  
 Forwarding from 127.0.0.1:8443 -> 8443
 Forwarding from [::1]:8443 -> 8443
 ```
@@ -91,7 +82,7 @@ Forwarding from [::1]:8443 -> 8443
 If you already have something running on your location machine on port 8443 you can use a different localhost port, like 8553. Just remember to change your PGO_APISERVER_URL environment variable to reflect your new port.
 
 ```
-> kubectl port-forward postgres-operator-5fb47ccf59-46wcf 8443:8553
+> kubectl -n pgo port-forward svc/postgres-operator 8443:8553
 Forwarding from 127.0.0.1:8443 -> 8553
 Forwarding from [::1]:8443 -> 8553
 ```
