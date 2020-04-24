@@ -58,9 +58,9 @@ select distinct(json_content ##> {status} as status, count(json_content) from my
 
 So if you are intrigued by what you saw here and want to learn more here are some great resources (if I do say so myself)
 
-We have an online tutorial to get your started with JSON in PostgreSQL. It is free and available 24/7
+We have an [online tutorial](https://learn.crunchydata.com/postgresql-devel/courses/beyond-basics/qjsonintro/) to get your started with JSON in PostgreSQL. It is free and available 24/7
 
-and then I also did a live stream where I walked people through the material above.
+and then I also did [a live stream](https://youtu.be/GeSOhbuUR6A) where I walked people through the material above.
 
 Let us know what you think of the material! I would also love to hear about how YOU are using JSON with PostgreSQL.
 
